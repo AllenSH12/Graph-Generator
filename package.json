@@ -1,0 +1,7 @@
+{
+	"name":"GeneratorGraph",
+	"version": "1.0.0",
+	"description": "Adobe Generator plugin to plot data from an array onto the open document.",
+	"main": "main.js",
+	"generator-core-version": "~1"
+}
