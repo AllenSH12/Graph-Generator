@@ -22,13 +22,17 @@
 											} \
 											var populationSize = data.length; \
 											var doc = app.activeDocument; \
+											var fillColor = new SolidColor; \
+											fillColor.rgb.red = 128; \
+											fillColor.rgb.green = 177; \
+											fillColor.rgb.blue = 211; \
 											var h = parseInt(doc.height); \
 											var w = parseInt(doc.width); \
 											var xSpan = w / data.length; \
 											var ySpan = h / maxDataValue; \
-											var squareSize = 10; \
+											var squareSize = 5; \
 											var testing = doc.artLayers.add(); \
-											testing.name = 'layarrrr'; \
+											testing.name = 'Graph'; \
 											for (var i=0; i<populationSize; i++) { \
 												var dataEntry = data[i]; \
 												var x = i * xSpan; \
@@ -37,17 +41,20 @@
 												for (var j=0; j<4; j++) { \
 													lineArray[j] = new PathPointInfo; \
 													if (j==0) { \
-														lineArray[j].anchor = Array(x-squareSize/2,y); \
+														lineArray[j].anchor = Array(x-squareSize/2, y); \
+														lineArray[j].leftDirection = Array(x-squareSize/2, y+squareSize/2); \
 													} else if (j==1) { \
-														lineArray[j].anchor = Array(x,y+squareSize/2); \
+														lineArray[j].anchor = Array(x, y+squareSize/2); \
+														lineArray[j].leftDirection = Array(x+squareSize/2, y+squareSize/2); \
 													} else if (j==2) { \
-														lineArray[j].anchor = Array(x+squareSize/2,y); \
+														lineArray[j].anchor = Array(x+squareSize/2, y); \
+														lineArray[j].leftDirection = Array(x+squareSize/2, y-squareSize/2); \
 													} else if (j==3) { \
-														lineArray[j].anchor = Array(x,y-squareSize/2); \
+														lineArray[j].anchor = Array(x, y-squareSize/2); \
+														lineArray[j].leftDirection = Array(x-squareSize/2, y-squareSize/2); \
 													} \
-													lineArray[j].kind = PointKind.CORNERPOINT; \
-													lineArray[j].leftDirection = lineArray[j].anchor; \
 													lineArray[j].rightDirection = lineArray[j].anchor; \
+													lineArray[j].kind = PointKind.CORNERPOINT; \
 												} \
 												var lineName = 'Line ' + i; \
 												var lineSubPathArray = new Array(); \
@@ -57,6 +64,7 @@
 													lineSubPathArray[0].entireSubPath = lineArray; \
 												var myPathItem = doc.pathItems.add(lineName, lineSubPathArray); \
 												myPathItem.strokePath(ToolType.BRUSH); \
+												myPathItem.fillPath(fillColor, ColorBlendMode.NORMAL, 100, false, 0, true, true); \
 											}";
 
 			generator.evaluateJSXString(newStuff);
